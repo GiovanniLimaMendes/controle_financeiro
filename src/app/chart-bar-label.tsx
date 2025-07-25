@@ -21,30 +21,40 @@ import {
 export const description = "A bar chart with a label";
 
 const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
+  { month: "Janeiro", gastos: 186, saldo: 300 },
+  { month: "Fevereiro", gastos: 305, aldo: 300 },
+  { month: "Março", gastos: 237, saldo: 300 },
+  { month: "Abril", gastos: 73, saldo: 300 },
+  { month: "Maio", gastos: 209, saldo: 300 },
+  { month: "Junho", gastos: 214, saldo: 300 },
+  { month: "Julho", gastos: 270, saldo: 300 },
+  { month: "Agosto", gastos: 180, saldo: 300 },
+  { month: "Setembro", gastos: 250, saldo: 300 },
+  { month: "Outubro", gastos: 300, saldo: 300 },
+  { month: "Novembro", gastos: 214, saldo: 300 },
+  { month: "Dezembro", gastos: 350, saldo: 300 },
 ];
 
 const chartConfig = {
-  desktop: {
-    label: "Desktop",
+  gastos: {
+    label: "Gastos",
     color: "var(--chart-1)",
+  },
+  saldo: {
+    label: "Saldo",
+    color: "var(--chart-2)",
   },
 } satisfies ChartConfig;
 
 export function ChartBarLabel() {
   return (
-    <Card className="mt-5 w-full box-border">
+    <Card className="w-full box-border">
       <CardHeader>
         {/* <CardTitle>Bar Chart - Label</CardTitle> */}
-        <CardDescription>January - June 2024</CardDescription>
+        <CardDescription>Gastos totais 2025</CardDescription>
       </CardHeader>
-      <CardContent className="h-[150px]">
-        <ChartContainer config={chartConfig} className="h-[150px] w-full">
+      <CardContent>
+        <ChartContainer config={chartConfig} className="w-full">
           <BarChart
             accessibilityLayer
             data={chartData}
@@ -64,23 +74,31 @@ export function ChartBarLabel() {
               cursor={false}
               content={<ChartTooltipContent hideLabel />}
             />
-            <Bar dataKey="desktop" fill="var(--primary)" radius={8}>
-              <LabelList
+            <Bar dataKey="gastos" fill="var(--primary)" radius={4}>
+              {/* <LabelList
                 position="top"
                 offset={12}
                 className="fill-foreground"
                 fontSize={12}
-              />
+              /> */}
+            </Bar>
+            <Bar dataKey="saldo" fill="var(--secondary)" radius={4}>
+              {/* <LabelList
+                position="top"
+                offset={12}
+                className="fill-foreground"
+                fontSize={12}
+              /> */}
             </Bar>
           </BarChart>
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
-        {/* <div className="flex gap-2 leading-none font-medium">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-        </div> */}
+        <div className="flex gap-2 leading-none font-medium">
+          Exibindo os gastos totais <TrendingUp className="h-4 w-4" />
+        </div>
         <div className="text-muted-foreground leading-none">
-          Showing total visitors for the last 6 months
+          Ano de 2025
         </div>
       </CardFooter>
     </Card>

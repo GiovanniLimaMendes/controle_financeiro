@@ -75,8 +75,9 @@
   --sidebar-accent: #2171FF;
   --sidebar-accent-foreground: #fff;
   --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --sidebar-ring: oklch(62.793% 0.25768 29.223);
   --primary: #2171FF;
+  --secondary: #ef4444
 }
 
 /* .dark {
