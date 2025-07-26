@@ -49,7 +49,7 @@ export default function Home() {
         <h1 className="mt-5 text-xl font-semibold text-gray-700">
           Visão Geral
         </h1>
-        <nav className="flex gap-10">
+        <nav className="flex gap-5">
           <a className="flex flex-col bg-white border-b-4 border-blue-500 shadow-lg p-3 rounded mt-5 items-center cursor-pointer max-w-20 min-w-20 max-h-22 hover:bg-gray-100">
             <ReceiptText size={35} />
             <span>Extrato</span>

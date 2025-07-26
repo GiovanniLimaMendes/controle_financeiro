@@ -21,18 +21,18 @@ import {
 export const description = "A bar chart with a label";
 
 const chartData = [
-  { month: "Janeiro", gastos: 186, saldo: 300 },
-  { month: "Fevereiro", gastos: 305, aldo: 300 },
-  { month: "Março", gastos: 237, saldo: 300 },
-  { month: "Abril", gastos: 73, saldo: 300 },
-  { month: "Maio", gastos: 209, saldo: 300 },
-  { month: "Junho", gastos: 214, saldo: 300 },
-  { month: "Julho", gastos: 270, saldo: 300 },
-  { month: "Agosto", gastos: 180, saldo: 300 },
-  { month: "Setembro", gastos: 250, saldo: 300 },
-  { month: "Outubro", gastos: 300, saldo: 300 },
-  { month: "Novembro", gastos: 214, saldo: 300 },
-  { month: "Dezembro", gastos: 350, saldo: 300 },
+  { month: "Janeiro", gastos: 186, saldo: 300, restante: 180 },
+  { month: "Fevereiro", gastos: 305, saldo: 300, restante: 180 },
+  { month: "Março", gastos: 237, saldo: 300, restante: 180 },
+  { month: "Abril", gastos: 73, saldo: 300, restante: 180 },
+  { month: "Maio", gastos: 209, saldo: 300, restante: 180 },
+  { month: "Junho", gastos: 214, saldo: 300, restante: 180 },
+  { month: "Julho", gastos: 270, saldo: 300, restante: 180 },
+  { month: "Agosto", gastos: 180, saldo: 300, restante: 180 },
+  { month: "Setembro", gastos: 250, saldo: 300, restante: 180 },
+  { month: "Outubro", gastos: 300, saldo: 300, restante: 180 },
+  { month: "Novembro", gastos: 214, saldo: 300, restante: 180 },
+  { month: "Dezembro", gastos: 350, saldo: 300, restante: 180 },
 ];
 
 const chartConfig = {
@@ -43,6 +43,10 @@ const chartConfig = {
   saldo: {
     label: "Saldo",
     color: "var(--chart-2)",
+  },
+  restante: {
+    label: "Restante",
+    color: "var(--chart-3)",
   },
 } satisfies ChartConfig;
 
@@ -74,7 +78,7 @@ export function ChartBarLabel() {
               cursor={false}
               content={<ChartTooltipContent hideLabel />}
             />
-            <Bar dataKey="gastos" fill="var(--primary)" radius={4}>
+            <Bar dataKey="saldo" fill="var(--chart-saldo)" radius={4}>
               {/* <LabelList
                 position="top"
                 offset={12}
@@ -82,7 +86,15 @@ export function ChartBarLabel() {
                 fontSize={12}
               /> */}
             </Bar>
-            <Bar dataKey="saldo" fill="var(--secondary)" radius={4}>
+            <Bar dataKey="gastos" fill="var(--chart-gastos)" radius={4}>
+              {/* <LabelList
+                position="top"
+                offset={12}
+                className="fill-foreground"
+                fontSize={12}
+              /> */}
+            </Bar>
+            <Bar dataKey="restante" fill="var(--chart-restante)" radius={4}>
               {/* <LabelList
                 position="top"
                 offset={12}

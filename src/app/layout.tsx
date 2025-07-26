@@ -10,7 +10,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
       <body>
         <SidebarProvider defaultOpen={true}>
           <AppSidebar />
-          <main className="w-full m-[25px]">
+          <main className="w-full p-5">
             {children}
           </main>
         </SidebarProvider>
