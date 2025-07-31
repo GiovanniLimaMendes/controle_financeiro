@@ -77,17 +77,10 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(62.793% 0.25768 29.223);
   --primary: #2171FF;
-<<<<<<< Updated upstream
-  /* --secondary: #ef4444; */
-  --chart-saldo: #22C55E;
-  --chart-gastos: #ef4444;
-  --chart-restante: #2171FF;
-=======
   --secondary: #eee;
   --chart-1: #ef4444;
   --chart-2: #2171FF;
   --chart-3: #10B981;
->>>>>>> Stashed changes
 }
 
 /* .dark {
