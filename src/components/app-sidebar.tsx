@@ -1,4 +1,12 @@
-import { BanknoteArrowDown, BanknoteArrowUp, ChevronUp, Home, ReceiptText, User2 } from "lucide-react";
+import {
+  BanknoteArrowDown,
+  BanknoteArrowUp,
+  ChevronUp,
+  Home,
+  ReceiptText,
+  Target,
+  User2,
+} from "lucide-react";
 import { SidebarFooter, useSidebar } from "@/components/ui/sidebar";
 
 import {
@@ -40,14 +48,24 @@ const items = [
     url: "#",
     icon: BanknoteArrowDown,
   },
+  {
+    title: "Metas",
+    url: "#",
+    icon: Target,
+  },
 ];
 
-export function AppSidebar() {
+type AppSidebarProps = {
+  userName: string;
+};
+
+export function AppSidebar({userName}: AppSidebarProps) {
+
   return (
     <Sidebar variant="sidebar">
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
+          <SidebarGroupLabel></SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
@@ -70,7 +88,7 @@ export function AppSidebar() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton>
-                  <User2 /> Usuário
+                  <User2 /> {userName}
                   <ChevronUp className="ml-auto" />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
@@ -92,4 +110,3 @@ export function AppSidebar() {
     </Sidebar>
   );
 }
-

@@ -11,7 +11,9 @@ import {
 import {
   BanknoteArrowDown,
   BanknoteArrowUp,
+  Pencil,
   ReceiptText,
+  Target,
   User2,
   Wallet,
 } from "lucide-react";
@@ -24,17 +26,34 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import { cookies } from "next/headers";
+import { getFinanceiroPorUsuario } from "./api/financeiro/route";
 
-export default function Home() {
+export default async function Home() {
+  const cookieStore = await cookies();
+  const usuario_nome = cookieStore.get('usuario_nome')?.value || "Usuário";
+  const usuario_id = cookieStore.get('usuario_id')?.value;
+
+  if (!usuario_id) {
+    return <div>Não autorizado</div>;
+  }
+
+  const data = await getFinanceiroPorUsuario(usuario_id);
+
+  const saldo = Number(data.saldo) || 0;
+  const entradas = Number(data.entradas) || 0;
+  const saidas = Number(data.saidas) || 0;
+  
   return (
     <div className="w-full">
       <header className="flex justify-between items-center pb-2">
         <h1 className="text-xl font-semibold text-gray-700">
-          Olá, <span className="text-blue-500">@user</span>. Seja Bem-vindo!
+          Olá, <span className="text-blue-500">{usuario_nome}</span>. Seja Bem-vindo!
         </h1>
         <DropdownMenu>
           <DropdownMenuTrigger className="flex border-2 border-primary p-2 rounded-md text-primary hover:bg-primary hover:text-white gap-2 cursor-pointer">
-            <User2 /> Usuário
+            <User2 /> {usuario_nome}
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuLabel>Minha conta</DropdownMenuLabel>
@@ -49,7 +68,7 @@ export default function Home() {
         <h1 className="mt-5 text-xl font-semibold text-gray-700">
           Visão Geral
         </h1>
-        <nav className="flex gap-5">
+        <nav className="flex gap-7">
           <a className="flex flex-col bg-white border-b-4 border-blue-500 shadow-lg p-3 rounded mt-5 items-center cursor-pointer max-w-20 min-w-20 max-h-22 hover:bg-gray-100">
             <ReceiptText size={35} />
             <span>Extrato</span>
@@ -62,19 +81,23 @@ export default function Home() {
             <BanknoteArrowDown size={35} />
             <span>Saída</span>
           </a>
+          <a className="flex flex-col bg-white border-b-4 border-blue-500 shadow-lg p-3 rounded mt-5 items-center cursor-pointer max-w-20 min-w-20 max-h-22 hover:bg-gray-100">
+            <Target size={35} />
+            <span>Metas</span>
+          </a>
         </nav>
         <div className="flex gap-5 mt-5">
           <div className="bg-white border-l-4 border-green-500 shadow-md p-4 rounded w-full">
             <CardTitle className=" text-lg">Saldo</CardTitle>
-            <CardTitle className=" text-lg">R$ @saldo</CardTitle>
+            <CardTitle className=" text-lg">R$ {saldo.toFixed(2)}</CardTitle>
           </div>
           <div className="bg-white border-l-4 border-red-500 shadow-md p-4 rounded w-full">
-            <CardTitle className=" text-lg">Gastos</CardTitle>
-            <CardTitle className=" text-lg">R$ @gastos</CardTitle>
+            <CardTitle className=" text-lg">Saídas</CardTitle>
+            <CardTitle className=" text-lg">R$ {saidas.toFixed(2)}</CardTitle>
           </div>
           <div className="bg-white border-l-4 border-blue-500 shadow-md p-4 rounded w-full">
-            <CardTitle className=" text-lg">Restante</CardTitle>
-            <CardTitle className=" text-lg">R$ @restante</CardTitle>
+            <CardTitle className=" text-lg">Entradas</CardTitle>
+            <CardTitle className=" text-lg">R$ {entradas.toFixed(2)}</CardTitle>
           </div>
         </div>
       </div>
@@ -82,41 +105,20 @@ export default function Home() {
         <ChartBarLabel />
         <Card className="w-full">
           <CardHeader>
-            <CardTitle>Resumo 2025:</CardTitle>
+            <CardTitle>Painel Financeiro:</CardTitle>
             <CardDescription>Resumo financeiro do ano de 2025</CardDescription>
-            <CardAction><Wallet/></CardAction>
+            <CardAction>
+              <Wallet />
+            </CardAction>
           </CardHeader>
           <CardContent className="flex flex-col gap-5">
-            <div className="flex flex-col gap-2">
-              <div className="flex gap-2 items-top border-l-4 border-green-500 pl-2">
-                <CardTitle>Total Saldo:</CardTitle>
-                <CardTitle>R$ @saldo</CardTitle>
+            <Card className="p-3 flex flex-row gap-3 items-center cursor-pointer hover:bg-secondary">
+              <Target size={35} />
+              <div className="flex flex-col w-full">
+                <CardTitle className="text-base">Meta: R$@meta</CardTitle>
+                <Progress className="mt-2" value={50} />
               </div>
-              <div className="flex gap-2 items-top border-l-4 border-transparent pl-2">
-                <CardTitle>Média saldo mensal:</CardTitle>
-                <CardTitle>R$ @media_saldo</CardTitle>
-              </div>
-            </div>
-            <div className="flex flex-col gap-2">
-              <div className="flex gap-2 items-top border-l-4 border-red-500 pl-2">
-                <CardTitle>Total Gastos:</CardTitle>
-                <CardTitle>R$ @gastos</CardTitle>
-              </div>
-              <div className="flex gap-2 items-top border-l-4 border-transparent pl-2">
-                <CardTitle>Média gastos mensal:</CardTitle>
-                <CardTitle>R$ @media_gastos</CardTitle>
-              </div>
-            </div>
-            <div className="flex flex-col gap-2">
-            <div className="flex gap-2 items-top border-l-4 border-blue-500 pl-2">
-              <CardTitle>Total Restante:</CardTitle>
-              <CardTitle>R$ @restante</CardTitle>
-            </div>
-            <div className="flex gap-2 items-top border-l-4 border-transparent pl-2">
-              <CardTitle>Média restante mensal:</CardTitle>
-              <CardTitle>R$ @media_restante</CardTitle>
-            </div>
-            </div>
+            </Card>
           </CardContent>
         </Card>
       </div>
