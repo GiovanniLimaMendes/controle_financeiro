@@ -70,7 +70,7 @@ export function AppSidebar({ userName }: AppSidebarProps) {
               alt="Imagem Externa"
               width={800}
               height={10}
-              className="mb-5 mt-5"
+              className="mb-4 mt-4"
             />
           <SidebarGroupContent>
             <SidebarMenu>

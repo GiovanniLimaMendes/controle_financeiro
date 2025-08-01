@@ -29,11 +29,25 @@ import {
 import { Progress } from "@/components/ui/progress";
 import { cookies } from "next/headers";
 import { getFinanceiroPorUsuario } from "./api/financeiro/route";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { DialogClose } from "@radix-ui/react-dialog";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { AdicionarReceita } from "@/components/adicionarReceita";
 
 export default async function Home() {
   const cookieStore = await cookies();
-  const usuario_nome = cookieStore.get('usuario_nome')?.value || "Usuário";
-  const usuario_id = cookieStore.get('usuario_id')?.value;
+  const usuario_nome = cookieStore.get("usuario_nome")?.value || "Usuário";
+  const usuario_id = cookieStore.get("usuario_id")?.value;
 
   if (!usuario_id) {
     return <div>Não autorizado</div>;
@@ -44,12 +58,13 @@ export default async function Home() {
   const saldo = Number(data.saldo) || 0;
   const entradas = Number(data.entradas) || 0;
   const saidas = Number(data.saidas) || 0;
-  
+
   return (
     <div className="w-full">
       <header className="flex justify-between items-center pb-2">
         <h1 className="text-xl font-semibold text-gray-700">
-          Olá, <span className="text-blue-500">{usuario_nome}</span>. Seja Bem-vindo!
+          Olá, <span className="text-blue-500">{usuario_nome}</span>. Seja
+          Bem-vindo!
         </h1>
         <DropdownMenu>
           <DropdownMenuTrigger className="flex border-2 border-primary p-2 rounded-md text-primary hover:bg-primary hover:text-white gap-2 cursor-pointer">
@@ -73,10 +88,7 @@ export default async function Home() {
             <ReceiptText size={35} />
             <span>Extrato</span>
           </a>
-          <a className="flex flex-col bg-white border-b-4 border-blue-500 shadow-lg p-3 rounded mt-5 items-center cursor-pointer max-w-20 min-w-20 max-h-22 hover:bg-gray-100">
-            <BanknoteArrowUp size={35} />
-            <span>Entrada</span>
-          </a>
+          <AdicionarReceita/>
           <a className="flex flex-col bg-white border-b-4 border-blue-500 shadow-lg p-3 rounded mt-5 items-center cursor-pointer max-w-20 min-w-20 max-h-22 hover:bg-gray-100">
             <BanknoteArrowDown size={35} />
             <span>Saída</span>
@@ -89,15 +101,15 @@ export default async function Home() {
         <div className="flex gap-5 mt-5">
           <div className="bg-white border-l-4 border-green-500 shadow-md p-4 rounded w-full">
             <CardTitle className=" text-lg">Saldo</CardTitle>
-            <CardTitle className=" text-lg">R$ {saldo.toFixed(2)}</CardTitle>
+            <CardTitle className=" text-lg">{saldo.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</CardTitle>
           </div>
           <div className="bg-white border-l-4 border-red-500 shadow-md p-4 rounded w-full">
             <CardTitle className=" text-lg">Saídas</CardTitle>
-            <CardTitle className=" text-lg">R$ {saidas.toFixed(2)}</CardTitle>
+            <CardTitle className=" text-lg">{saidas.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</CardTitle>
           </div>
           <div className="bg-white border-l-4 border-blue-500 shadow-md p-4 rounded w-full">
             <CardTitle className=" text-lg">Entradas</CardTitle>
-            <CardTitle className=" text-lg">R$ {entradas.toFixed(2)}</CardTitle>
+            <CardTitle className=" text-lg">{entradas.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</CardTitle>
           </div>
         </div>
       </div>
