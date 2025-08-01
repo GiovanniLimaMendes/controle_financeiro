@@ -25,6 +25,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import Image from "next/image";
 
 // Menu items.
 const items = [
@@ -59,13 +60,18 @@ type AppSidebarProps = {
   userName: string;
 };
 
-export function AppSidebar({userName}: AppSidebarProps) {
-
+export function AppSidebar({ userName }: AppSidebarProps) {
   return (
     <Sidebar variant="sidebar">
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel></SidebarGroupLabel>
+            <Image
+              src="/img/GIGA_TECH_BLACK.png"
+              alt="Imagem Externa"
+              width={800}
+              height={10}
+              className="mb-5 mt-5"
+            />
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
