@@ -12,7 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { BanknoteArrowUp, CalendarIcon } from "lucide-react";
+import { BanknoteArrowDown, BanknoteArrowUp, CalendarIcon } from "lucide-react";
 import { useState } from "react";
 import {
   Select,
@@ -27,12 +27,17 @@ import React from "react";
 import { format } from "date-fns/format";
 import { ptBR } from "date-fns/locale";
 import { Textarea } from "./ui/textarea";
+import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 
-export function AdicionarReceita() {
+export function AdicionarSaida() {
   const [date, setDate] = React.useState<Date>();
   const [valor, setValor] = useState("0,00");
   const [categoriaSelecionada, setCategoriaSelecionada] = useState("");
   const [descricao, setDescricao] = useState("");
+  const [alert, setAlert] = useState<{
+    type: "error" | "success";
+    message: string;
+  } | null>(null);
 
   function formatarValor(v: string) {
     const apenasNumeros = v.replace(/\D/g, ""); // Remove não dígitos
@@ -56,14 +61,43 @@ export function AdicionarReceita() {
       categoria: categoriaSelecionada,
       data: date ? date.toISOString().split("T")[0] : null, // formata para "YYYY-MM-DD"
       descricao: descricao, // você terá que adicionar um estado para descrição
-      tipo: "entrada",
+      tipo: "saida",
     };
 
-    const res = await fetch("/api/transacoes", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
+    try {
+      const res = await fetch("/api/registrarSaida", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const erro = await res.json();
+        setAlert({
+          type: "error",
+          message: erro?.mensagem || "Erro ao registrar saída.",
+        });
+        setTimeout(() => setAlert(null), 5000);
+        return;
+      }
+
+      setAlert({
+        type: "success",
+        message: "Saída registrada com sucesso!",
+      });
+      setTimeout(() => setAlert(null), 5000);
+
+      // (opcional) Limpar campos após sucesso
+      setValor("0,00");
+      setCategoriaSelecionada("");
+      setDate(undefined);
+      setDescricao("");
+    } catch (error) {
+      setAlert({
+        type: "error",
+        message: "Erro inesperado. Tente novamente.",
+      });
+    }
 
     // Tratar resposta...
   }
@@ -72,20 +106,16 @@ export function AdicionarReceita() {
     <Dialog>
       <DialogTrigger asChild>
         <a className="flex flex-col bg-white border-b-4 border-blue-500 shadow-lg p-3 rounded mt-5 items-center cursor-pointer max-w-20 min-w-20 max-h-22 hover:bg-gray-100">
-          <BanknoteArrowUp size={35} />
-          <span>Entrada</span>
+          <BanknoteArrowDown size={35} />
+          <span>Saída</span>
         </a>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Registrar nova entrada</DialogTitle>
+          <DialogTitle>Registrar nova saída</DialogTitle>
         </DialogHeader>
 
-        <form
-          onSubmit={handleSubmit}
-          className="mt-3"
-          id="form-entrada"
-        >
+        <form onSubmit={handleSubmit} className="mt-3" id="form-entrada">
           <div className="flex flex-col gap-6">
             <div className="grid gap-2">
               <Label htmlFor="valor">Valor</Label>
@@ -107,7 +137,10 @@ export function AdicionarReceita() {
             </div>
             <div className="grid gap-2">
               <Label htmlFor="categoria">Categoria</Label>
-              <Select value={categoriaSelecionada} onValueChange={setCategoriaSelecionada}>
+              <Select
+                value={categoriaSelecionada}
+                onValueChange={setCategoriaSelecionada}
+              >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Selecionar" />
                 </SelectTrigger>
@@ -185,6 +218,24 @@ export function AdicionarReceita() {
           </Button>
         </DialogFooter>
       </DialogContent>
+      {/* ALERTA DE ERRO OU SUCESSO */}
+      {alert && (
+        <div
+          className={`fixed bottom-4 right-4 z-500 w-[300px] bg-white border-l-4 rounded ${
+            alert.type === "error" ? "border-red-500" : "border-green-500"
+          }`}
+        >
+          <Alert
+            variant={alert.type === "error" ? "destructive" : "default"}
+            className="mb-4 border-none"
+          >
+            <AlertTitle>
+              {alert.type === "error" ? "Erro" : "Sucesso"}
+            </AlertTitle>
+            <AlertDescription>{alert.message}</AlertDescription>
+          </Alert>
+        </div>
+      )}
     </Dialog>
   );
 }

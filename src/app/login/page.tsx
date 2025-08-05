@@ -82,7 +82,11 @@ export default function Login() {
         <CardContent>
           {/* ALERTA DE ERRO OU SUCESSO */}
           {alert && (
-            <div className="fixed bottom-4 right-4 z-50 w-[300px] bg-white border-l-4 {alert.type === 'error' ? 'border-red-500' : 'border-green-500'}">
+            <div
+              className={`fixed bottom-4 right-4 z-500 w-[300px] bg-white border-l-4 rounded ${
+                alert.type === "error" ? "border-red-500" : "border-green-500"
+              }`}
+            >
               <Alert
                 variant={alert.type === "error" ? "destructive" : "default"}
                 className="mb-4 border-none"

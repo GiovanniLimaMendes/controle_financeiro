@@ -43,6 +43,7 @@ import { DialogClose } from "@radix-ui/react-dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { AdicionarReceita } from "@/components/adicionarReceita";
+import { AdicionarSaida } from "@/components/adicionarSaida";
 
 export default async function Home() {
   const cookieStore = await cookies();
@@ -89,10 +90,7 @@ export default async function Home() {
             <span>Extrato</span>
           </a>
           <AdicionarReceita/>
-          <a className="flex flex-col bg-white border-b-4 border-blue-500 shadow-lg p-3 rounded mt-5 items-center cursor-pointer max-w-20 min-w-20 max-h-22 hover:bg-gray-100">
-            <BanknoteArrowDown size={35} />
-            <span>Saída</span>
-          </a>
+          <AdicionarSaida/>
           <a className="flex flex-col bg-white border-b-4 border-blue-500 shadow-lg p-3 rounded mt-5 items-center cursor-pointer max-w-20 min-w-20 max-h-22 hover:bg-gray-100">
             <Target size={35} />
             <span>Metas</span>
