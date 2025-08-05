@@ -14,7 +14,7 @@ export async function GET() {
     const [rows] = await db.query<any[]>(`
       SELECT
         MONTH(data) AS mes,
-        SUM(CASE WHEN tipo = 'entrada' THEN valor ELSE 0 END) AS saldo,
+        SUM(CASE WHEN tipo = 'entrada' THEN valor ELSE 0 END) AS entrada,
         SUM(CASE WHEN tipo = 'saida' THEN valor ELSE 0 END) AS gastos
       FROM transacoes
       WHERE usuario_id = ?
@@ -25,14 +25,14 @@ export async function GET() {
     // Mapeia os dados para incluir o campo "restante"
     const dados = Array.from({ length: 12 }, (_, i) => {
       const item = rows.find(r => r.mes === i + 1);
-      const saldo = item?.saldo || 0;
+      const entrada = item?.entrada || 0;
       const gastos = item?.gastos || 0;
-      const restante = saldo - gastos;
+      const saldo = entrada - gastos;
       return {
         month: new Date(0, i).toLocaleString("pt-BR", { month: "long" }),
-        saldo,
+        entrada,
         gastos,
-        restante,
+        saldo,
       };
     });
 

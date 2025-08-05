@@ -35,7 +35,7 @@ export function ChartBarLabel() {
   const chartConfig = {
     saldo: { label: "Saldo", color: "var(--chart-3)" },
     gastos: { label: "Gastos", color: "var(--chart-1)" },
-    restante: { label: "Restante", color: "var(--chart-2)" },
+    entrada: { label: "Entrada", color: "var(--chart-2)" },
   };
 
   return (
@@ -51,7 +51,7 @@ export function ChartBarLabel() {
             <ChartTooltip content={<ChartTooltipContent hideLabel />} />
             <Bar dataKey="saldo" fill="var(--chart-3)" radius={4} />
             <Bar dataKey="gastos" fill="var(--chart-1)" radius={4} />
-            <Bar dataKey="restante" fill="var(--chart-2)" radius={4} />
+            <Bar dataKey="entrada" fill="var(--chart-2)" radius={4} />
           </BarChart>
         </ChartContainer>
       </CardContent>
