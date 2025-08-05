@@ -9,9 +9,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
-  BanknoteArrowDown,
-  BanknoteArrowUp,
-  Pencil,
   ReceiptText,
   Target,
   User2,
@@ -29,19 +26,6 @@ import {
 import { Progress } from "@/components/ui/progress";
 import { cookies } from "next/headers";
 import { getFinanceiroPorUsuario } from "./api/financeiro/route";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { DialogClose } from "@radix-ui/react-dialog";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { AdicionarReceita } from "@/components/adicionarReceita";
 import { AdicionarSaida } from "@/components/adicionarSaida";
 
