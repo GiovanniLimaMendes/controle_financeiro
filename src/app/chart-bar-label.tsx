@@ -1,7 +1,7 @@
 "use client";
 
 import { TrendingUp } from "lucide-react";
-import { Bar, BarChart, CartesianGrid, LabelList, XAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from "recharts";
 
 import {
   Card,
@@ -33,7 +33,7 @@ export function ChartBarLabel() {
   }, []);
 
   const chartConfig = {
-    saldo: { label: "Saldo", color: "var(--chart-3)" },
+    // saldo: { label: "Saldo", color: "var(--chart-3)" },
     gastos: { label: "Gastos", color: "var(--chart-1)" },
     entrada: { label: "Entrada", color: "var(--chart-2)" },
   };
@@ -45,12 +45,12 @@ export function ChartBarLabel() {
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="w-full">
-          <BarChart data={data} margin={{ top: 20 }}>
-            <CartesianGrid vertical={false} />
+          <BarChart data={data} margin={{top: 40}}>
+            <CartesianGrid vertical={false}/>
             <XAxis dataKey="month" tickFormatter={(value) => value.slice(0, 3)} />
             <ChartTooltip content={<ChartTooltipContent hideLabel />} />
-            <Bar dataKey="saldo" fill="var(--chart-3)" radius={4} />
-            <Bar dataKey="gastos" fill="var(--chart-1)" radius={4} />
+            {/* <Bar dataKey="saldo" fill="var(--chart-3)" radius={4} /> */}
+            <Bar dataKey="gastos" fill="var(--chart-1)" radius={4}/>
             <Bar dataKey="entrada" fill="var(--chart-2)" radius={4} />
           </BarChart>
         </ChartContainer>

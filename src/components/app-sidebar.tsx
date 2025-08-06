@@ -7,7 +7,7 @@ import {
   Target,
   User2,
 } from "lucide-react";
-import { SidebarFooter, useSidebar } from "@/components/ui/sidebar";
+import { SidebarFooter, SidebarTrigger, useSidebar } from "@/components/ui/sidebar";
 
 import {
   Sidebar,
@@ -26,28 +26,19 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import Image from "next/image";
+import { useEffect } from "react";
 
 // Menu items.
 const items = [
   {
     title: "Menu",
-    url: "#",
+    url: "/",
     icon: Home,
   },
   {
     title: "Extrato",
-    url: "#",
+    url: "extrato",
     icon: ReceiptText,
-  },
-  {
-    title: "Entrada",
-    url: "#",
-    icon: BanknoteArrowUp,
-  },
-  {
-    title: "Saída",
-    url: "#",
-    icon: BanknoteArrowDown,
   },
   {
     title: "Metas",
@@ -61,6 +52,12 @@ type AppSidebarProps = {
 };
 
 export function AppSidebar({ userName }: AppSidebarProps) {
+  const {setOpen} = useSidebar();
+
+  useEffect(() => {
+    setOpen(true);
+  }, [setOpen]);
+  
   return (
     <Sidebar variant="sidebar">
       <SidebarContent>

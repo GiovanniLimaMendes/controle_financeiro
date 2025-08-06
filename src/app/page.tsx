@@ -28,6 +28,8 @@ import { cookies } from "next/headers";
 import { getFinanceiroPorUsuario } from "./api/financeiro/route";
 import { AdicionarReceita } from "@/components/adicionarReceita";
 import { AdicionarSaida } from "@/components/adicionarSaida";
+import { BotaoLogout } from "@/components/botaoLogout";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
   const cookieStore = await cookies();
@@ -35,7 +37,7 @@ export default async function Home() {
   const usuario_id = cookieStore.get("usuario_id")?.value;
 
   if (!usuario_id) {
-    return <div>Não autorizado</div>;
+    return redirect("/login");
   }
 
   const data = await getFinanceiroPorUsuario(usuario_id);
@@ -59,7 +61,7 @@ export default async function Home() {
             <DropdownMenuLabel>Minha conta</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem>Conta</DropdownMenuItem>
-            <DropdownMenuItem>Sair</DropdownMenuItem>
+            <BotaoLogout/>
           </DropdownMenuContent>
         </DropdownMenu>
       </header>
@@ -68,7 +70,7 @@ export default async function Home() {
         <h1 className="mt-5 text-xl font-semibold text-gray-700">
           Visão Geral
         </h1>
-        <nav className="flex gap-7">
+        <nav className="flex gap-5 box-border">
           <a className="flex flex-col bg-white border-b-4 border-blue-500 shadow-lg p-3 rounded mt-5 items-center cursor-pointer max-w-20 min-w-20 max-h-22 hover:bg-gray-100">
             <ReceiptText size={35} />
             <span>Extrato</span>
@@ -80,7 +82,7 @@ export default async function Home() {
             <span>Metas</span>
           </a>
         </nav>
-        <div className="flex gap-5 mt-5">
+        <div className="flex flex-col gap-5 mt-5 sm:flex-row sm:justify-end">
           <div className="bg-white border-l-4 border-green-500 shadow-md p-4 rounded w-full">
             <CardTitle className=" text-lg">Saldo</CardTitle>
             <CardTitle className=" text-lg">{saldo.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</CardTitle>
@@ -95,7 +97,7 @@ export default async function Home() {
           </div>
         </div>
       </div>
-      <div className="flex mt-5 gap-5">
+      <div className="flex flex-col mt-5 gap-5 sm:flex-row sm:justify-end">
         <ChartBarLabel />
         <Card className="w-full">
           <CardHeader>

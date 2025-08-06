@@ -4,7 +4,7 @@ import AppLayoutClient from "./AppLayoutClient";
 import "./globals.css";
 
 export const metadata = {
-  title: "Home",
+  title: "Controle Financeiro",
   description: "Controle financeiro",
 };
 
