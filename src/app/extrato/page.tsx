@@ -64,7 +64,7 @@ export default async function Extrato() {
             <DropdownMenuLabel>Minha conta</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem>Conta</DropdownMenuItem>
-            <BotaoLogout/>
+            <BotaoLogout />
           </DropdownMenuContent>
         </DropdownMenu>
       </header>
@@ -75,6 +75,7 @@ export default async function Extrato() {
           <TableHeader>
             <TableRow>
               <TableHead>ID</TableHead>
+              <TableHead>Data</TableHead>
               <TableHead>Tipo</TableHead>
               <TableHead>Categoria</TableHead>
               <TableHead>Descrição</TableHead>
@@ -92,11 +93,21 @@ export default async function Extrato() {
               transacoes.map((t) => (
                 <TableRow key={t.id}>
                   <TableCell className="font-medium">{t.id}</TableCell>
-                  <TableCell>{t.tipo === "entrada" ? "Entrada" : "Saída"}</TableCell>
+                  <TableCell className="font-medium">
+                    {new Date(t.data).toLocaleDateString("pt-br")}
+                  </TableCell>
+                  <TableCell>
+                    {t.tipo === "entrada" ? "Entrada" : "Saída"}
+                  </TableCell>
                   <TableCell>{t.categoria}</TableCell>
                   <TableCell>{t.descricao || "-"}</TableCell>
-                  <TableCell className="text-right">
-                    R$ {Number(t.valor).toFixed(2)}
+                  <TableCell
+                    className={`text-right ${
+                      t.tipo === "entrada" ? "text-blue-700" : "text-red-600"
+                    }`}
+                  >
+                    {t.tipo === "saida" ? "-" : ""}
+                    {Number(t.valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
                   </TableCell>
                 </TableRow>
               ))

@@ -20,6 +20,14 @@ export async function GET(req: NextRequest) {
     const limite = Number(searchParams.get("limite") || "10");
     const offset = (pagina - 1) * limite;
 
+    // Ordenação
+    const colunasValidas = ["id", "data", "valor", "categoria"];
+    const ordenarPorRaw = searchParams.get("ordenarPor") || "data";
+    const ordenarPor = colunasValidas.includes(ordenarPorRaw) ? ordenarPorRaw : "data";
+
+    const ordemRaw = searchParams.get("ordem")?.toUpperCase();
+    const ordem = ordemRaw === "ASC" ? "ASC" : "DESC"; // default: DESC
+
     // Montar SQL dinâmico com filtros
     let sql = "SELECT id, tipo, valor, categoria, descricao, data FROM transacoes WHERE usuario_id = ?";
     const params: any[] = [usuario_id];
@@ -39,7 +47,7 @@ export async function GET(req: NextRequest) {
       params.push(categoria);
     }
 
-    sql += " ORDER BY data DESC LIMIT ? OFFSET ?";
+    sql += ` ORDER BY ${ordenarPor} ${ordem} LIMIT ? OFFSET ?`;
     params.push(limite, offset);
 
     const [rows] = await db.query(sql, params);
