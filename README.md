@@ -1,36 +1,92 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💸 Controle Financeiro
 
-## Getting Started
+Um sistema completo de controle financeiro pessoal, com cadastro de entradas e saídas, exibição de saldo atual e visualização gráfica mensal. Desenvolvido com Node.js no backend e Next.js no frontend.
 
-First, run the development server:
+---
+
+## 🚀 Funcionalidades
+
+- Cadastro de transações (entradas e saídas)
+- Cálculo automático de saldo
+- Listagem das transações
+- Visualização mensal por gráfico de barras (Recharts)
+- API RESTful integrada com MySQL
+- Alertas de sucesso e erro com feedback ao usuário
+
+---
+
+## 🧱 Tecnologias Utilizadas
+
+### Frontend (Next.js)
+
+- [Next.js (App Router)](https://nextjs.org/docs/app)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [shadcn/ui](https://ui.shadcn.com/)
+- [Recharts](https://recharts.org/)
+- [Lucide-react](https://lucide.dev/)
+
+### Backend (Node.js)
+
+- [Node.js](https://nodejs.org/)
+- [Express](https://expressjs.com/)
+- [MySQL](https://www.mysql.com/) via [`mysql2`](https://www.npmjs.com/package/mysql2)
+
+---
+
+## 📦 Instalação
+
+### Requisitos:
+
+- Node.js 18+
+- MySQL instalado e configurado
+
+### Clonando o projeto:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/GiovanniLimaMendes/controle_financeiro
+cd controle_financeiro
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Backend:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Configure o banco de dados:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1- Crie o banco de dados e as tabelas usando o script abaixo:
 
-## Learn More
+```bash
+mysql -u root -p < src/app/database/schema.sql
+```
 
-To learn more about Next.js, take a look at the following resources:
+2- Instale as dependências:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm install
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3- Conecte-se ao banco
 
-## Deploy on Vercel
+```bash
+cd src/app/database
+node db.js
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Frontend:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+No diretório raiz, inicie o projeto:
+```bash
+npm run dev
+```
+
+O app será iniciado em: http://localhost:3000
+
+---
+
+## 🧑‍💻 Autor
+
+- Giovanni Lima Mendes – [@GiovanniLimaMendes](https://github.com/GiovanniLimaMendes)
+
+---
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT.
