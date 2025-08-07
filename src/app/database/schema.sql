@@ -44,6 +44,3 @@ CREATE TABLE IF NOT EXISTS configuracoes (
   notificacoes BOOLEAN DEFAULT TRUE,
   FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
 );
-
-INSERT INTO transacoes (usuario_id, tipo, valor, categoria, data, descricao)
-VALUES (2, 'entrada', 500.00, 'Salário', CURDATE(), 'Pagamento do mês');
